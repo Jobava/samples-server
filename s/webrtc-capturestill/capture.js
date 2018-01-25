@@ -28,7 +28,10 @@
     navigator.getMedia = ( navigator.getUserMedia ||
                            navigator.webkitGetUserMedia ||
                            navigator.mozGetUserMedia ||
-                           navigator.msGetUserMedia);
+                           navigator.msGetUserMedia ||
+			   navigator.mediaDevices.getUserMedia);
+    video.srcObject = ( video.mozSrcObject ||
+		        video.srcObject);
 
     navigator.getMedia(
       {
@@ -36,8 +39,8 @@
         audio: false
       },
       function(stream) {
-        if (navigator.mozGetUserMedia) {
-          video.mozSrcObject = stream;
+        if (navigator.mediaDevices.getUserMedia) {
+          video.srcObject = stream;
         } else {
           var vendorURL = window.URL || window.webkitURL;
           video.src = vendorURL.createObjectURL(stream);
